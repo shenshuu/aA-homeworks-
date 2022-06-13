@@ -1,4 +1,6 @@
+require '../W3D5/queue.rb'
 require 'set'
+
 class GraphNode 
 
     SEEN = Set.new 
@@ -7,7 +9,20 @@ class GraphNode
         @neighbors = neighbors
     end 
 
-    def bfs(src, target)
+    def bfs(target)
+        queue = Queue.new
+        queue.enqueue(self)
 
-    end
+        while !queue.empty?
+            size = queue.size 
+            
+            for i in 0...size 
+                root = queue.dequeue
+                return root if root.value == target 
+                root.children.each {|child| queue.enqueue(child)}
+            end
+        end
+        nil 
+    end 
 end
+
